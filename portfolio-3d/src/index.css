@@ -1,0 +1,234 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg: #0a0a0f;
+    --bg-secondary: #11111a;
+    --card: #16161f;
+    --border: #1f1f2e;
+    --primary: #00ff88;
+    --secondary: #ff006e;
+    --accent: #7209b7;
+    --text: #f0f0f5;
+    --text-muted: #888899;
+    --text-dim: #555566;
+  }
+
+  * {
+    @apply border-gaming-border;
+  }
+
+  html {
+    @apply scroll-smooth;
+  }
+
+  body {
+    @apply bg-gaming-bg text-gaming-text font-sans overflow-x-hidden;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  }
+
+  ::selection {
+    @apply bg-gaming-primary/30 text-gaming-text;
+  }
+
+  ::-webkit-scrollbar {
+    @apply w-2;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-gaming-bg;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-gaming-primary/50 rounded-full hover:bg-gaming-primary;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply relative px-8 py-3 font-display font-semibold text-gaming-bg bg-gaming-primary
+           overflow-hidden transition-all duration-300 ease-out
+           hover:scale-105 hover:shadow-[0_0_30px_rgba(0,255,136,0.5)]
+           active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-gaming-primary/50;
+  }
+
+  .btn-primary::before {
+    content: '';
+    @apply absolute inset-0 bg-gradient-to-r from-gaming-secondary via-gaming-accent to-gaming-primary
+           opacity-0 transition-opacity duration-300;
+  }
+
+  .btn-primary:hover::before {
+    @apply opacity-100;
+  }
+
+  .btn-primary span {
+    @apply relative z-10;
+  }
+
+  .btn-secondary {
+    @apply relative px-8 py-3 font-display font-semibold text-gaming-primary bg-transparent
+           border border-gaming-primary/50 overflow-hidden transition-all duration-300 ease-out
+           hover:bg-gaming-primary/10 hover:border-gaming-primary hover:shadow-[0_0_20px_rgba(0,255,136,0.3)]
+           active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-gaming-primary/50;
+  }
+
+  .btn-secondary::before {
+    content: '';
+    @apply absolute inset-0 bg-gaming-primary opacity-0 transition-opacity duration-300;
+  }
+
+  .btn-secondary:hover::before {
+    @apply opacity-10;
+  }
+
+  .btn-secondary span {
+    @apply relative z-10;
+  }
+
+  .card-glass {
+    @apply bg-gaming-card/80 backdrop-blur-xl border border-gaming-border/50
+           transition-all duration-300 hover:border-gaming-primary/30 hover:shadow-[0_0_40px_rgba(0,255,136,0.1)];
+  }
+
+  .card-glass-hover {
+    @apply hover:scale-[1.02] hover:shadow-[0_20px_60px_rgba(0,0,0,0.5),0_0_60px_rgba(0,255,136,0.1)];
+  }
+
+  .section-container {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .section-title {
+    @apply font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-gaming-text
+           relative inline-block;
+  }
+
+  .section-title::after {
+    content: '';
+    @apply absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-gaming-primary via-gaming-secondary to-gaming-accent
+           rounded-full animate-glow;
+  }
+
+  .glitch-text {
+    @apply relative font-display font-bold;
+    text-shadow:
+      0.05em 0 0 rgba(255, 0, 110, 0.75),
+      -0.025em -0.05em 0 rgba(0, 255, 136, 0.75),
+      0.025em 0.05em 0 rgba(114, 9, 183, 0.75);
+  }
+
+  .glitch-text::before,
+  .glitch-text::after {
+    content: attr(data-text);
+    @apply absolute inset-0;
+  }
+
+  .glitch-text::before {
+    @apply text-gaming-secondary;
+    clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+    animation: glitch-anim 3s infinite linear alternate-reverse;
+  }
+
+  .glitch-text::after {
+    @apply text-gaming-accent;
+    clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
+    animation: glitch-anim 2.5s infinite linear alternate-reverse;
+  }
+
+  @keyframes glitch-anim {
+    0% { transform: translate(0); }
+    20% { transform: translate(-2px, 2px); }
+    40% { transform: translate(-2px, -2px); }
+    60% { transform: translate(2px, 2px); }
+    80% { transform: translate(2px, -2px); }
+    100% { transform: translate(0); }
+  }
+
+  .scanlines {
+    @apply absolute inset-0 pointer-events-none overflow-hidden;
+    background: repeating-linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.1) 0px,
+      rgba(0, 0, 0, 0.1) 1px,
+      transparent 1px,
+      transparent 3px
+    );
+    animation: scanline 8s linear infinite;
+  }
+
+  @keyframes scanline {
+    0% { transform: translateY(-100%); }
+    100% { transform: translateY(100vh); }
+  }
+
+  .grid-bg {
+    @apply absolute inset-0 pointer-events-none opacity-30;
+    background-image:
+      linear-gradient(rgba(0,255,136,0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,255,136,0.05) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  .radial-glow {
+    @apply absolute pointer-events-none;
+    background: radial-gradient(ellipse at center, rgba(0,255,136,0.15) 0%, transparent 70%);
+  }
+
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-gaming-primary via-gaming-secondary to-gaming-accent;
+  }
+
+  .border-gradient {
+    @apply relative;
+  }
+
+  .border-gradient::before {
+    content: '';
+    @apply absolute inset-0 rounded-[inherit] p-[1px] -z-10
+           bg-gradient-to-r from-gaming-primary/50 via-gaming-secondary/50 to-gaming-accent/50;
+  }
+}
+
+@layer utilities {
+  .perspective-1000 {
+    perspective: 1000px;
+  }
+
+  .transform-style-3d {
+    transform-style: preserve-3d;
+  }
+
+  .backface-hidden {
+    backface-visibility: hidden;
+  }
+
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(2deg); }
+  }
+
+  .animate-rotate-slow {
+    animation: rotate 20s linear infinite;
+  }
+
+  @keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  .animate-pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite alternate;
+  }
+
+  @keyframes pulse-glow {
+    0% { box-shadow: 0 0 20px rgba(0,255,136,0.3), 0 0 40px rgba(0,255,136,0.1); }
+    100% { box-shadow: 0 0 40px rgba(0,255,136,0.5), 0 0 80px rgba(0,255,136,0.2); }
+  }
+}
